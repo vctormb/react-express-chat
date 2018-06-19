@@ -44,32 +44,9 @@ app.use(passport.initialize());
  * SOCKET
  */
 io.on('connection', async (socket) => {
-  socket.on('join user', async (user) => {
-    // add user to db
-    const onlineUser = new OnlineUsers({ socketId: socket.id, nickname: user.nickname });
-    const addedUser = await onlineUser.save();
-
-    // get online users
-    const onlineUsers = await OnlineUsers.find({});
-
-    io.emit('added user', {
-      onlineUsers,
-    });
-  });
-
-
-  socket.on('disconnect', async () => {
-    await OnlineUsers.findOneAndRemove({ socketId: socket.id });
-
-    io.emit('disconnected user', { socketId: socket.id });
-  });
-
-  // SEND MESSAGE
-  socket.on('chat message', async (msg) => {
-    const user = await OnlineUsers.findOne({socketId: socket.id});
-
-    io.emit('chat message', { nickname: user.nickname, message: msg.message });
-  });
+  require('./sockets/chat/joinedUser')(io, socket);
+  require('./sockets/chat/chatMessage')(io, socket);
+  require('./sockets/chat/disconnect')(io, socket);
 });
 
 // catch 404 and forward to error handler

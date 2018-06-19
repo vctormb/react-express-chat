@@ -49,7 +49,7 @@ class App extends Component {
 
   sendMessage = (e) => {
     const { message, } = this.state;
-console.log(e)
+
     if (!message || e.key !== 'Enter') return;
 
     socket.emit('chat message', { message });
