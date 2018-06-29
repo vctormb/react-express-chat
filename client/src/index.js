@@ -1,8 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// rebass
+import { Provider, } from 'rebass';
+
+ReactDOM.render(
+    <Provider
+        theme={{
+            colors: {
+                graydark: '#202225',
+                graylight: '#2f3136',
+            }
+        }}
+    >
+
+        <App />
+    </Provider>
+    , document.getElementById('root'));
 registerServiceWorker();
