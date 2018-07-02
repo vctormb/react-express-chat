@@ -13,6 +13,7 @@ injectGlobal`
       height: 100vh;
       display: flex;
       flex-direction: row;
+			background-color: #202225;
   }
 
   #root>div {

@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 // rebass
-import { Flex, Box, Text, } from 'rebass';
+import { Flex, } from 'rebass';
 
 // components
 import SideList from '../../components/DataDisplay/SideList';

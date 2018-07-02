@@ -11,7 +11,7 @@ const usersRouter = require('./routes/users');
 // models
 const OnlineUsers = require('./models/OnlineUsers');
 
-mongoose.connect('mongodb://localhost/katanadb');
+mongoose.connect('mongodb://admin:a123456@ds117691.mlab.com:17691/react-chat-express');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {

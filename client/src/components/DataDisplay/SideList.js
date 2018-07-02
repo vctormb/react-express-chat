@@ -1,47 +1,60 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 // styled components
 import styled from 'styled-components';
 
 // rebass
-import { Flex, Box, Text, } from 'rebass';
-import { ENGINE_METHOD_DIGESTS } from 'constants';
+import { Flex, } from 'rebass';
 
 // intern components
 const BoxWrapper = styled(Flex)`
     display: flex;
     flex-direction: column;
+		background-color: ${props => props.theme.colors.graydark};
 `;
 
-const Header = styled('div')`
+const Header = styled.div`
     padding: 0.625rem 1rem;
     color: white;
-    background-color: ${props => props.theme.colors.graydark};
-    border-bottom: 2px solid ${props => props.theme.colors.graylight};
+		box-shadow: ${props => props.theme.shadows.bottom};
 `;
 
-const Body = styled('div')`
+const Body = styled(Flex)`
     flex: 1;
-    padding: 0.625rem 1rem;
+    padding-top: 1.25em;
     overflow-y: scroll;
     color: white;
-    background-color: ${props => props.theme.colors.graydark};
-    border-bottom: 2px solid ${props => props.theme.colors.graylight};
 
     ::-webkit-scrollbar {
         width: 6px;
     }
  
     ::-webkit-scrollbar-thumb {
-        background-color: black;
+        background-color: ${props => props.theme.colors.grayxdark};
     }
 `;
 
-const Footer = styled('div')`
+const Footer = styled.div`
     padding: 0.625rem 1rem;
     color: white;
-    background-color: ${props => props.theme.colors.graydark};
+    background-color: rgba(32,34,37,.3);
 `;
+
+const SideListButton = styled(Link)`
+		text-decoration: none;
+		margin: 0.0625em .5em;
+		padding: .5em;
+		border-radius: 3px;
+		opacity: .3;
+		color: #fff;
+		font-weight: 500;
+
+		&:hover {
+			background-color: ${props => props.theme.colors.graysoft};
+			opacity: 1;
+		}
+`
 
 class SideList extends Component {
 	state = {
@@ -49,14 +62,14 @@ class SideList extends Component {
 	}
 
 	componentDidMount() {
-		this.generateMenu()
+		this.generateMenu();
 	}
 
 	generateMenu() {
 		const arr = [];
 
 		for (let i = 0; i < 20; i++) {
-			arr.push(`friend ${i}`)
+			arr.push(`friend ${i + 1}`)
 		}
 
 		this.setState({
@@ -67,13 +80,20 @@ class SideList extends Component {
 	render() {
 		return (
 			<BoxWrapper width={[2 / 12]}>
-				<Header>Header</Header>
-				<Body>
+				<Header>Search bar</Header>
+				<Body
+					flexDirection="column"
+				>
 					{this.state.friends.map((val, index) => (
-						<p key={index} style={{ backgroundColor: "#2f3136" }}>{val}</p>
+						<SideListButton
+							key={index}
+							to="/"
+						>
+							{val}
+						</SideListButton>
 					))}
 				</Body>
-				<Footer>Footer</Footer>
+				<Footer>Nickname</Footer>
 			</BoxWrapper>
 		);
 	}
