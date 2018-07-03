@@ -18,9 +18,15 @@ const BoxWrapper = styled(Flex)`
 `;
 
 const Header = styled.div`
-    padding: 0.625em 1em;
+		display: flex;
+		align-items: center;
+
+		height: 3rem;
+		font-size: 1.125rem;
+    padding: 0.8300em 0.625rem;
     color: white;
     box-shadow: ${props => props.theme.shadows.bottom};
+		font-weight: ${props => props.theme.fontWeights.bold};
 `;
 
 const Body = styled.div`
