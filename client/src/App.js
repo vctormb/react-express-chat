@@ -6,6 +6,8 @@ import { injectGlobal } from 'styled-components';
 
 // containers
 import Wrapper from './containers/Chat/Wrapper';
+import Login from './containers/Login/Login';
+
 
 injectGlobal`
   * { box-sizing: border-box; }
@@ -31,6 +33,7 @@ class App extends Component {
       <Router>
         <React.Fragment>
           <Route exact path="/" component={Wrapper} />
+          <Route path="/login" component={Login} />
           <Route path="/chat" component={Wrapper} />
         </React.Fragment>
       </Router>

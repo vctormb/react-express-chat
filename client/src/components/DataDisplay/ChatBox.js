@@ -14,6 +14,7 @@ import ChatBoxMessage from '../DataDisplay/ChatBoxMessage';
 const BoxWrapper = styled(Flex)`
     display: flex;
     flex-direction: column;
+		flex: 1;
 		background-color: ${props => props.theme.colors.graylight};
 `;
 
