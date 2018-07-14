@@ -7,13 +7,16 @@ import styled from 'styled-components';
 // rebass
 import { Flex, Input, } from 'rebass';
 
+// components
+import Avatar from './Avatar';
+
 // intern components
 const BoxWrapper = styled(Flex)`
     display: flex;
     flex-direction: column;
 		flex-shrink: 0;
 		background-color: ${props => props.theme.colors.graydark};
-		width: 15em;
+		width: 15rem;
 `;
 
 const Header = styled.div`
@@ -29,7 +32,7 @@ const Header = styled.div`
 
 const Body = styled(Flex)`
     flex: 1;
-    padding-top: 1.25em;
+    padding-top: 1.25rem;
     overflow-y: scroll;
     color: white;
 
@@ -46,7 +49,7 @@ const InputWrapper = styled.div`
 	background-color: rgba(0,0,0,.2);
 	border-radius: 4px;
 	border: 1px solid rgba(0,0,0,.1);
-	padding: 0.125em;
+	padding: 0.125rem;
 	flex: 1;
 `;
 
@@ -54,24 +57,40 @@ const CustomInput = styled(Input)`
 	font-weight: 500;
 `;
 
-const Footer = styled.div`
-    padding: 0.9375em 0.625rem;
+const Footer = styled(Flex)`
+    padding: 0.9375rem 0.625rem;
     color: white;
     background-color: rgba(32,34,37,.3);
 		font-size: 0.875rem;
+		
+		& > span {
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 `;
 
 const SideListButton = styled(Link)`
+		display: flex;	
+		align-items: center;
+		flex-shrink: 0;
 		text-decoration: none;
-		margin: 0.0625em .5em;
-		padding: .5em;
+		margin: 0.0625rem .5rem;
+		padding: .3rem .5rem;
 		border-radius: 3px;
-		opacity: .3;
 		color: #fff;
 
 		&:hover {
 			background-color: ${props => props.theme.colors.graysoft};
 			opacity: 1;
+		}
+
+		& > span {
+			overflow: hidden;
+    	text-overflow: ellipsis;
+    	white-space: nowrap;
+			opacity: .3;
 		}
 `
 
@@ -101,7 +120,7 @@ class SideList extends Component {
 			<BoxWrapper width={[2 / 12]}>
 				<Header>
 					<InputWrapper>
-						<CustomInput 
+						<CustomInput
 							placeholder="Start a conversation"
 							fontSize="0.75rem"
 							py="5px"
@@ -117,7 +136,14 @@ class SideList extends Component {
 							key={index}
 							to="/"
 						>
-							{val}
+							<React.Fragment>
+								<Avatar
+									width="30px"
+									height="30px"
+									m="0 .75rem 0 0"
+								/>
+								<span>{val}</span>
+							</React.Fragment>
 						</SideListButton>
 					))}
 				</Body>

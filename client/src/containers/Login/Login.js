@@ -21,11 +21,24 @@ const FormBox = styled(Box)`
 	background-color: ${props => props.theme.colors.graydark};
 	box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
 	text-align: center;
+	width: 30em;
+
+	@media (max-width: 490px) {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+
+		background: linear-gradient(to left bottom,#3d4046,#1e1e23);
+		width: 100%;
+		height: 100%;
+		padding: 1.25em;
+	}
 `;
 
 const CustomInput = styled(Input)`
-	height: 40px;
+	height: 2.5em;
 	border: 1px solid ${props => props.theme.colors.grayxdark};
+	color: ${props => props.theme.colors.graywhite};
 `;
 
 const InputLabel = styled(Label)`
@@ -37,7 +50,7 @@ const InputLabel = styled(Label)`
 
 const LoginButton = styled(Button)`
 	background-color: ${props => props.theme.colors.purple};
-	flex: 1;
+	width: 100%;
 	min-height: 2.75em;
 	cursor: pointer;
 
@@ -62,32 +75,26 @@ class Login extends Component {
 			>
 				<FormBox
 					p={40}
-					width={480}
-					color='white'
-					bg='blue'
 				>
-					<Box mb={20}>
-						<InputLabel
-							fontSize="0.75rem"
-							mb={8}
-						>
-							Nickname
+					<InputLabel fontSize="0.75rem">
+						Nickname
 						</InputLabel>
-						<CustomInput
-							bg="rgba(0,0,0,.1)"
-							px={10}
-							borderRadius={3}
-						/>
-					</Box>
-					<Flex>
-						<LoginButton
-							fontWeight={500}
-							fontSize="1rem"
-							borderRadius={3}
-						>
-							Let's chat!
+
+					<CustomInput
+						bg="rgba(0,0,0,.1)"
+						px={10}
+						mb={8}
+						borderRadius={3}
+					/>
+
+
+					<LoginButton
+						fontWeight={500}
+						fontSize="1rem"
+						borderRadius={3}
+					>
+						Let's chat!
 					</LoginButton>
-					</Flex>
 				</FormBox>
 			</FlexWrapper>
 		);

@@ -10,9 +10,19 @@ import Login from './containers/Login/Login';
 
 
 injectGlobal`
+	html, body {
+		height: 100%;
+	}
+
+	body { 
+		margin: 0; 
+		padding: 0;
+	}
+
   * { box-sizing: border-box; }
+
   #root, #root>div {
-      height: 100vh;
+			height: 100%;
       display: flex;
       flex-direction: row;
 			background-color: #202225;
@@ -21,24 +31,22 @@ injectGlobal`
   #root>div {
     flex: 1;
   }
-  
-  body { margin: 0; }
 `;
 
 class App extends Component {
-  state = {}
+	state = {}
 
-  render() {
-    return (
-      <Router>
-        <React.Fragment>
-          <Route exact path="/" component={Wrapper} />
-          <Route path="/login" component={Login} />
-          <Route path="/chat" component={Wrapper} />
-        </React.Fragment>
-      </Router>
-    );
-  }
+	render() {
+		return (
+			<Router>
+				<React.Fragment>
+					<Route exact path="/" component={Wrapper} />
+					<Route path="/login" component={Login} />
+					<Route path="/chat" component={Wrapper} />
+				</React.Fragment>
+			</Router>
+		);
+	}
 }
 
 export default App;
