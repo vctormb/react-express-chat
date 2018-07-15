@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Route, } from "react-router-dom";
 // styled components
 import { injectGlobal } from 'styled-components';
 
+// components
+import ChatBox from './components/DataDisplay/ChatBox';
+
 // containers
 import Wrapper from './containers/Chat/Wrapper';
 import Login from './containers/Login/Login';

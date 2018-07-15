@@ -4,16 +4,13 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 // rebass
-import { Flex, } from 'rebass';
+import { Flex, Text, } from 'rebass';
 
 // components
-import ChatInput from '../DataEntry/ChatInput';
-import ChatBoxMessage from '../DataDisplay/ChatBoxMessage';
+import ChatBoxContent from './ChatBoxContent';
 
 // intern components
-const BoxWrapper = styled(Flex)`
-    display: flex;
-    flex-direction: column;
+const Wrapper = styled(Flex)`
 		flex: 1;
 		background-color: ${props => props.theme.colors.graylight};
 `;
@@ -21,7 +18,6 @@ const BoxWrapper = styled(Flex)`
 const Header = styled.div`
 		display: flex;
 		align-items: center;
-
 		height: 3rem;
 		font-size: 1.125rem;
     padding: 0.8300em 0.625rem;
@@ -30,35 +26,39 @@ const Header = styled.div`
 		font-weight: ${props => props.theme.fontWeights.bold};
 `;
 
-const Body = styled.div`
-    flex: 1;
-    overflow-y: scroll;
-    color: white;
-
-    ::-webkit-scrollbar {
-        width: 6px;
-    }
- 
-    ::-webkit-scrollbar-thumb {
-			background-color: ${props => props.theme.colors.grayxdark};
-    }
-`;
-
-const Footer = styled.div`
-		margin: 0 1.25em;
-    padding: 1.625rem 0;
-    color: white;
-    background-color: ${props => props.theme.colors.graylight};
-		box-shadow: 0 -1px 0 hsla(0,0%,100%,.06);
+const NoContentWrapper = styled(Flex)`
+	flex: 1;
+	text-transform: uppercase;
+	color: ${props => props.theme.colors.grayxdark};
 `;
 
 class ChatBox extends Component {
 	state = {
-		messages: []
+		messages: [],
+		showChat: false,
+		caching: {
+			id: '',
+		}
 	}
 
 	componentDidMount() {
 		this.generateMessages();
+	}
+
+	static getDerivedStateFromProps(nextProps, prevState) {
+		const { match: { params, } } = nextProps;
+
+		if (params.id !== prevState.caching.id) {
+			return {
+				showChat: !!params.id,
+				caching: {
+					...prevState.caching,
+					id: params.id,
+				}
+			}
+		}
+
+		return null;
 	}
 
 	generateMessages() {
@@ -73,22 +73,46 @@ class ChatBox extends Component {
 		});
 	}
 
-	render() {
+	renderContent() {
+		const { showChat, messages, } = this.state;
+		
+		if (showChat) {
+			return (
+				<ChatBoxContent 
+					messages={messages}
+				/>
+			)
+		}
+
 		return (
-			<BoxWrapper width={[10 / 12]}>
-				<Header>Chat's title</Header>
-				<Body>
-					{this.state.messages.map((val, index) => (
-						<ChatBoxMessage
-							key={index}
-							message={val}
-						/>
-					))}
-				</Body>
-				<Footer>
-					<ChatInput />
-				</Footer>
-			</BoxWrapper>
+			<NoContentWrapper
+				alignItems="center"
+				justifyContent="center"
+			>
+				<Text
+					textAlign='center'
+					fontWeight='bold'
+					children='Lets chat!'
+				/>
+			</NoContentWrapper>
+		)
+	}
+
+	render() {
+		const { 
+			showChat, 
+			messages, 
+			caching: { id },
+		} = this.state;
+
+		return (
+			<Wrapper 
+				width={[10 / 12]}
+				flexDirection="column"
+			>
+				<Header>{showChat && `Chat's title ${id}`}</Header>
+				{this.renderContent()}
+			</Wrapper>
 		);
 	}
 }

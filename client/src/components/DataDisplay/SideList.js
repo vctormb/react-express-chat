@@ -106,8 +106,11 @@ class SideList extends Component {
 	generateMenu() {
 		const arr = [];
 
-		for (let i = 0; i < 20; i++) {
-			arr.push(`friend ${i + 1}`)
+		for (let i = 1; i < 6; i++) {
+			arr.push({
+				id: i,
+				name: `friend ${i}`,
+			})
 		}
 
 		this.setState({
@@ -134,7 +137,7 @@ class SideList extends Component {
 					{this.state.friends.map((val, index) => (
 						<SideListButton
 							key={index}
-							to="/"
+							to={`/chat/${val.id}`}
 						>
 							<React.Fragment>
 								<Avatar
@@ -142,7 +145,7 @@ class SideList extends Component {
 									height="30px"
 									m="0 .75rem 0 0"
 								/>
-								<span>{val}</span>
+								<span>{val.name}</span>
 							</React.Fragment>
 						</SideListButton>
 					))}

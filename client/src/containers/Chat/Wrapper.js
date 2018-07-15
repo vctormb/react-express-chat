@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route, } from "react-router-dom";
 
 // styled components
 import styled from 'styled-components';
@@ -21,7 +22,7 @@ class Wrapper extends Component {
 		return (
 			<FlexWrapper mx={0}>
 				<SideList />
-				<ChatBox />
+				<Route path="/chat/:id?" component={ChatBox} />
 			</FlexWrapper>
 		);
 	}
