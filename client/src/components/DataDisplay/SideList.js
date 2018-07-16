@@ -33,7 +33,7 @@ const Header = styled.div`
 const Body = styled(Flex)`
     flex: 1;
     padding-top: 1.25rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     color: white;
 
     ::-webkit-scrollbar {
