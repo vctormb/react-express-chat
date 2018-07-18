@@ -5,12 +5,11 @@ import { BrowserRouter as Router, Route, } from "react-router-dom";
 import { injectGlobal } from 'styled-components';
 
 // components
-import ChatBox from './components/DataDisplay/ChatBox';
+import PrivateRoute from './components/Routing/PrivateRoute';
 
 // containers
 import Wrapper from './containers/Chat/Wrapper';
 import Login from './containers/Login/Login';
-
 
 injectGlobal`
 	html, body {
@@ -43,9 +42,9 @@ class App extends Component {
 		return (
 			<Router>
 				<React.Fragment>
-					<Route exact path="/" component={Wrapper} />
+					<Route exact path="/" component={Login} />
 					<Route path="/login" component={Login} />
-					<Route path="/chat" component={Wrapper} />
+					<PrivateRoute path="/chat" component={Wrapper} />
 				</React.Fragment>
 			</Router>
 		);

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+// react-router
 import { Link } from 'react-router-dom';
 
 // styled components
@@ -95,30 +98,11 @@ const SideListButton = styled(Link)`
 `
 
 class SideList extends Component {
-	state = {
-		friends: []
-	}
-
-	componentDidMount() {
-		this.generateMenu();
-	}
-
-	generateMenu() {
-		const arr = [];
-
-		for (let i = 1; i < 6; i++) {
-			arr.push({
-				id: i,
-				name: `friend ${i}`,
-			})
-		}
-
-		this.setState({
-			friends: arr
-		});
-	}
+	state = {}
 
 	render() {
+		const { onlineUsers, nickname, } = this.props;
+
 		return (
 			<BoxWrapper width={[2 / 12]}>
 				<Header>
@@ -134,10 +118,10 @@ class SideList extends Component {
 				<Body
 					flexDirection="column"
 				>
-					{this.state.friends.map((val, index) => (
+					{onlineUsers.map((val, index) => (
 						<SideListButton
 							key={index}
-							to={`/chat/${val.id}`}
+							to={`/chat/${val._id}`}
 						>
 							<React.Fragment>
 								<Avatar
@@ -145,17 +129,22 @@ class SideList extends Component {
 									height="30px"
 									m="0 .75rem 0 0"
 								/>
-								<span>{val.name}</span>
+								<span>{val.nickname}</span>
 							</React.Fragment>
 						</SideListButton>
 					))}
 				</Body>
 				<Footer>
-					<span>Nickname</span>
+					<span>{nickname}</span>
 				</Footer>
 			</BoxWrapper>
 		);
 	}
+}
+
+SideList.propTypes = {
+	nickname: PropTypes.string.isRequired,
+	onlineUsers: PropTypes.array.isRequired,
 }
 
 export default SideList;

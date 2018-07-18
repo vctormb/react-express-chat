@@ -33,6 +33,10 @@ const Footer = styled.div`
 class ChatBoxContent extends Component {
 	state = {};
 
+	componentDidMount() {
+		this.scrollToBottom();
+	}
+
 	componentDidUpdate() {
 		const { messages } = this.props;
 

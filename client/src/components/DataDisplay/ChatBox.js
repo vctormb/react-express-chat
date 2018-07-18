@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+// redux
+import { connect } from 'react-redux';
+
 // styled components
 import styled from 'styled-components';
 
@@ -34,6 +37,7 @@ const NoContentWrapper = styled(Flex)`
 
 class ChatBox extends Component {
 	state = {
+		chatsTitle: '',
 		messages: [],
 		showChat: false,
 		caching: {
@@ -46,11 +50,11 @@ class ChatBox extends Component {
 	}
 
 	static getDerivedStateFromProps(nextProps, prevState) {
-		const { match: { params, } } = nextProps;
-
-		if (params.id !== prevState.caching.id) {
+		const { match: { params, }, authReducer,  } = nextProps;
+		if (params.id && params.id !== prevState.caching.id) {
 			return {
 				showChat: !!params.id,
+				chatsTitle: authReducer.onlineUsers.filter(x => x._id === params.id)[0].nickname,
 				caching: {
 					...prevState.caching,
 					id: params.id,
@@ -101,6 +105,7 @@ class ChatBox extends Component {
 	render() {
 		const { 
 			showChat, 
+			chatsTitle,
 			messages, 
 			caching: { id },
 		} = this.state;
@@ -110,11 +115,15 @@ class ChatBox extends Component {
 				width={[10 / 12]}
 				flexDirection="column"
 			>
-				<Header>{showChat && `Chat's title ${id}`}</Header>
+				<Header>{showChat && chatsTitle}</Header>
 				{this.renderContent()}
 			</Wrapper>
 		);
 	}
 }
 
-export default ChatBox;
+const mapStateToProps = state => ({
+	authReducer: state.auth,
+});
+
+export default connect(mapStateToProps)(ChatBox);

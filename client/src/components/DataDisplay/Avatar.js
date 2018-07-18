@@ -11,7 +11,7 @@ import { Box, } from 'rebass';
 const Wrapper = styled(Box)`
 	flex-shrink: 0;
 	height: ${props => props.height};
-	background-image: url("https://cdn.discordapp.com/avatars/431981005151141889/e7f89210b755b4a112f9649c8cdeddfa.png?size=256");
+	background-image: url("https://cdn.icon-icons.com/icons2/1371/PNG/512/robot01_90832.png");
 	background-size: cover;
 	border-radius: 50%;	
 `;

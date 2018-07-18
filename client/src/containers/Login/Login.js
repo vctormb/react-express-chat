@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 
+// redux
+import { connect, } from 'react-redux';
+import { LOGIN, } from '../../redux/auth/types';
+
 // styled components
 import styled from 'styled-components';
+
+// socket
+import socket from '../../utils/socket';
 
 // rebass
 import {
@@ -65,9 +72,59 @@ const LoginButton = styled(Button)`
 `;
 
 class Login extends Component {
-	state = {}
+	state = {
+		nickname: '',
+	}
+
+	componentDidMount() {
+		const { authReducer: { user, }, } = this.props;
+
+		if (user.isLoggedIn) {
+			this.redirectIfLoggedIn();
+		}
+
+		this.joinUserAfterLogin();
+	}
+
+	componentDidUpdate() {
+		const { authReducer: { user, }, } = this.props;
+
+		if (user.isLoggedIn) {
+			this.redirectIfLoggedIn();
+		}
+	}
+
+	redirectIfLoggedIn() {
+		const { history: { push }, } = this.props;
+
+		push('/chat');
+	}
+
+	login = () => {
+		const { nickname, } = this.state;
+
+		this.props.dispatch({ type: LOGIN.REQUEST, });
+		socket.emit('join user', { nickname });
+	}
+
+	joinUserAfterLogin() {
+		socket.on('user joined', (data) => {
+			const { nickname, } = this.state;
+
+			this.props.dispatch({
+				type: LOGIN.SUCCESS,
+				user: {
+					nickname,
+				},
+				onlineUsers: data.onlineUsers,
+			});
+		});
+	}
 
 	render() {
+		const { authReducer: { user } } = this.props;
+		const { nickname, } = this.state;
+
 		return (
 			<FlexWrapper
 				justifyContent="center"
@@ -78,22 +135,24 @@ class Login extends Component {
 				>
 					<InputLabel fontSize="0.75rem">
 						Nickname
-						</InputLabel>
+					</InputLabel>
 
 					<CustomInput
 						bg="rgba(0,0,0,.1)"
 						px={10}
 						mb={8}
 						borderRadius={3}
+						onChange={e => this.setState({ nickname: e.target.value })}
 					/>
-
 
 					<LoginButton
 						fontWeight={500}
 						fontSize="1rem"
 						borderRadius={3}
+						onClick={this.login}
+						disabled={!nickname}
 					>
-						Let's chat!
+						{user.isLoading ? 'Please wait...' : "Let's chat!"}
 					</LoginButton>
 				</FormBox>
 			</FlexWrapper>
@@ -101,4 +160,8 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+const mapStateToProps = state => ({
+	authReducer: state.auth,
+});
+
+export default connect(mapStateToProps)(Login);

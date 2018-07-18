@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { Route, } from "react-router-dom";
 
+// redux
+import { connect } from 'react-redux';
+
+// socket
+import socket from '../../utils/socket';
+
 // styled components
 import styled from 'styled-components';
 
@@ -19,13 +25,25 @@ class Wrapper extends Component {
 	state = {}
 
 	render() {
+		const { authReducer: { onlineUsers, user, } } = this.props;
+
 		return (
 			<FlexWrapper mx={0}>
-				<SideList />
-				<Route path="/chat/:id?" component={ChatBox} />
+				<SideList
+					nickname={user.data.nickname}
+					onlineUsers={onlineUsers}
+				/>
+				<Route
+					path="/chat/:id?"
+					component={ChatBox}
+				/>
 			</FlexWrapper>
 		);
 	}
 }
 
-export default Wrapper;
+const mapStateToProps = state => ({
+	authReducer: state.auth,
+});
+
+export default connect(mapStateToProps)(Wrapper);
