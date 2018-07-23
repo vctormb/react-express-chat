@@ -18,6 +18,7 @@ const InputWrapper = styled.div`
 const ChatInput = props => (
 	<InputWrapper>
 		<CustomInput
+			{...props}
 			placeholder="Message"
 			boxShadow='none'
 		/>

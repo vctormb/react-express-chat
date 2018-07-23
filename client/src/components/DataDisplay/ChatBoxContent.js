@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter, } from 'react-router-dom';
+import { isEqual } from 'lodash';
+
+// context
+import { ChatContext, } from '../../containers/Chat/Context/ChatContext';
 
 // styled components
 import styled from 'styled-components';
@@ -30,18 +35,37 @@ const Footer = styled.div`
 		box-shadow: 0 -1px 0 hsla(0,0%,100%,.06);
 `;
 
+const INITIAL_STATE = {
+	inputValue: '',
+	userMessages: {
+		messages: [],
+	},
+}
+
 class ChatBoxContent extends Component {
-	state = {};
+	state = INITIAL_STATE
 
 	componentDidMount() {
 		this.scrollToBottom();
+		this.getUserMessages();
 	}
 
-	componentDidUpdate() {
-		const { messages } = this.props;
+	componentDidUpdate(prevProps, prevState) {
+		const { chatContext, match: { params }, } = this.props;
 
-		if (messages.length) {
-			this.scrollToBottom();
+		if (params.id !== prevProps.match.params.id) {
+			this.getUserMessages();
+		}
+
+		if (params.id === prevProps.match.params.id && this.checkIfUserHasMessages()) {
+			if (this.findUserMessagesObject(chatContext.state.usersMessages).messages.length !==
+				prevState.userMessages.messages.length) {
+				this.setState({
+					userMessages: {
+						...this.findUserMessagesObject(chatContext.state.usersMessages),
+					}
+				});
+			}
 		}
 	}
 
@@ -49,27 +73,82 @@ class ChatBoxContent extends Component {
 		this.messagesEnd.scrollTop = this.messagesEnd.scrollHeight;
 	}
 
+	getUserMessages() {
+		const { chatContext, } = this.props;
+
+		if (!this.checkIfUserHasMessages()) {
+			this.setState(INITIAL_STATE);
+			return;
+		}
+
+		const userMessages = this.findUserMessagesObject(chatContext.state.usersMessages);
+
+		this.setState({
+			userMessages
+		});
+	}
+
+	checkIfUserHasMessages() {
+		const { chatContext, match: { params }, } = this.props;
+
+		return chatContext.state.usersMessages.some(x => x.emmiterId === params.id);
+	}
+
+	findUserMessagesObject(userMessages) {
+		const { match: { params }, } = this.props;
+
+		return userMessages.filter(x => x.emmiterId === params.id)[0];
+	}
+
+	handleKeyPress = event => {
+		const { chatContext: { actions }, match: { params } } = this.props;
+
+		if (event.key !== 'Enter') return;
+
+		actions.sendMessage({
+			message: event.target.value,
+			receiverId: params.id,
+		});
+
+		this.setState({
+			inputValue: ''
+		});
+	}
+
 	render() {
-		const { messages } = this.props;
+		const { state, } = this;
 
 		return (
 			<React.Fragment>
 				<Body
 					innerRef={element => this.messagesEnd = element}
 				>
-					{messages.map((val, index) => (
+					{state.userMessages.messages.map((val, index) => (
 						<ChatBoxMessage
 							key={index}
-							message={val}
+							message={val.message}
+							nickname={state.userMessages.nickname}
 						/>
 					))}
 				</Body>
 				<Footer>
-					<ChatInput />
+					<ChatInput
+						value={state.inputValue}
+						onChange={e => this.setState({ inputValue: e.target.value })}
+						onKeyPress={e => this.handleKeyPress(e)}
+					/>
 				</Footer>
 			</React.Fragment>
 		)
 	}
 }
 
-export default ChatBoxContent;
+const withContextConsumer = props => (
+	<ChatContext.Consumer>
+		{context =>
+			<ChatBoxContent {...props} chatContext={context} />
+		}
+	</ChatContext.Consumer>
+);
+
+export default withRouter(withContextConsumer);

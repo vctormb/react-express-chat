@@ -38,19 +38,14 @@ const NoContentWrapper = styled(Flex)`
 class ChatBox extends Component {
 	state = {
 		chatsTitle: '',
-		messages: [],
 		showChat: false,
 		caching: {
 			id: '',
 		}
 	}
 
-	componentDidMount() {
-		this.generateMessages();
-	}
-
 	static getDerivedStateFromProps(nextProps, prevState) {
-		const { match: { params, }, authReducer,  } = nextProps;
+		const { match: { params, }, authReducer, } = nextProps;
 		if (params.id && params.id !== prevState.caching.id) {
 			return {
 				showChat: !!params.id,
@@ -65,26 +60,12 @@ class ChatBox extends Component {
 		return null;
 	}
 
-	generateMessages() {
-		const arr = [];
-
-		for (let i = 0; i < 20; i++) {
-			arr.push(`message ${i + 1}`)
-		}
-
-		this.setState({
-			messages: arr
-		});
-	}
-
 	renderContent() {
 		const { showChat, messages, } = this.state;
-		
+
 		if (showChat) {
 			return (
-				<ChatBoxContent 
-					messages={messages}
-				/>
+				<ChatBoxContent />
 			)
 		}
 
@@ -103,15 +84,13 @@ class ChatBox extends Component {
 	}
 
 	render() {
-		const { 
-			showChat, 
+		const {
+			showChat,
 			chatsTitle,
-			messages, 
-			caching: { id },
 		} = this.state;
 
 		return (
-			<Wrapper 
+			<Wrapper
 				width={[10 / 12]}
 				flexDirection="column"
 			>

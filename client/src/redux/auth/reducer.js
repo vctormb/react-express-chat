@@ -1,4 +1,4 @@
-import { LOGIN, } from './types';
+import { LOGIN, NEW_ONLINE_USER, } from './types';
 
 const INITIAL_STATE = {
 	user: {
@@ -32,6 +32,12 @@ const auth = (state = INITIAL_STATE, action) => {
 					},
 				},
 				onlineUsers: action.onlineUsers,
+			}
+
+		case NEW_ONLINE_USER.SUCCESS:
+			return {
+				...state,
+				onlineUsers: state.onlineUsers.concat(action.newOnlineUser),
 			}
 
 		default:

@@ -46,7 +46,7 @@ class ChatBoxMessage extends Component {
 					m="0 1.25rem 0 0"
 				/>
 				<FlexWrapper flexDirection="column">
-					<span>Nickname</span>
+					<span>{props.nickname}</span>
 					<Message>{props.message}</Message>
 				</FlexWrapper>
 			</MessageWrapper>
@@ -55,6 +55,7 @@ class ChatBoxMessage extends Component {
 }
 
 ChatBoxMessage.propTypes = {
+	nickname: PropTypes.string.isRequired,
 	message: PropTypes.string.isRequired,
 }
 

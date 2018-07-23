@@ -11,7 +11,7 @@ const usersRouter = require('./routes/users');
 // models
 const OnlineUsers = require('./models/OnlineUsers');
 
-mongoose.connect('mongodb://admin:a123456@ds117691.mlab.com:17691/react-chat-express');
+mongoose.connect('mongodb://admin:a123456@ds243501.mlab.com:43501/react-chat-express');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -47,6 +47,8 @@ io.on('connection', async (socket) => {
   require('./sockets/chat/joinedUser')(io, socket);
   require('./sockets/chat/chatMessage')(io, socket);
   require('./sockets/chat/disconnect')(io, socket);
+  require('./sockets/chat/privateMessage')(io, socket);
+  // require('./sockets/chat/joinPrivateRoom')(io, socket);
 });
 
 // catch 404 and forward to error handler

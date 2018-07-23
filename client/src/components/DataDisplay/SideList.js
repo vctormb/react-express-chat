@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+
+// socket
+import socket from '../../utils/socket';
 
 // react-router
 import { Link } from 'react-router-dom';
@@ -100,6 +104,16 @@ const SideListButton = styled(Link)`
 class SideList extends Component {
 	state = {}
 
+	joinPrivateRoom = (value) => {
+		const { match: { params }, } = this.props;
+		
+		// console.log(value)
+
+		// socket.emit('join private room', {
+		// 	receiverId: value._id,
+		// });
+	}
+
 	render() {
 		const { onlineUsers, nickname, } = this.props;
 
@@ -122,6 +136,7 @@ class SideList extends Component {
 						<SideListButton
 							key={index}
 							to={`/chat/${val._id}`}
+							onClick={() => this.joinPrivateRoom(val)}
 						>
 							<React.Fragment>
 								<Avatar
@@ -147,4 +162,4 @@ SideList.propTypes = {
 	onlineUsers: PropTypes.array.isRequired,
 }
 
-export default SideList;
+export default withRouter(SideList);

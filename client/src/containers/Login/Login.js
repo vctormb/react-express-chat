@@ -110,7 +110,7 @@ class Login extends Component {
 	joinUserAfterLogin() {
 		socket.on('user joined', (data) => {
 			const { nickname, } = this.state;
-
+			
 			this.props.dispatch({
 				type: LOGIN.SUCCESS,
 				user: {
