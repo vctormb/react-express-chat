@@ -1,17 +1,35 @@
-const OnlineUsers = require('../../models/OnlineUsers');
+const User = require('../../models/User');
+const Room = require('../../models/Room');
 
 module.exports = (io, socket) => {
 	socket.on('send private message', async (msg) => {
-		const emitterUser = await OnlineUsers.findOne({ socketId: socket.id });
-		const receiverUser = await OnlineUsers.findById(msg.receiverId);
+		const emitterUser = await User.findOne({ socketId: socket.id });
+		const receiverUser = await User.findById(msg.receiverId);
 
 		const messageToReceiver = {
 			emmiterId: emitterUser._id,
+			receiverId: receiverUser._id,
 			nickname: emitterUser.nickname,
 			message: msg.message,
 		}
 
-		// sending to individual socketid (private message)
-		socket.to(receiverUser.socketId).emit('receive private message', messageToReceiver);
+		const alreadyInRoom = await Room.find({
+			users: {
+				$all: [emitterUser._id, receiverUser._id]
+			}
+		});
+
+		if (alreadyInRoom.length) {
+			io.in(alreadyInRoom[0]._id).clients((error, clients) => {
+				// if user is not inside the room yet
+				if (clients.every(x => String(x) !== String(receiverUser.socketId))) {
+					// sending to individual socketid (private message)
+					io.to(receiverUser.socketId).emit('receive private message', messageToReceiver);
+				}
+
+				// sending to all clients inside the room, including sender
+				io.in(alreadyInRoom[0]._id).emit('receive private message', messageToReceiver);
+			});
+		}
 	});
 }

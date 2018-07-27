@@ -54,7 +54,8 @@ class Wrapper extends Component {
 	receiveMessage() {
 		socket.on('receive private message', (msg) => {
 			const { usersMessages } = this.state;
-
+console.log('== // ==')
+console.log(msg)
 			const alreadyHasMessages = usersMessages.some(x => x.emmiterId === msg.emmiterId);
 
 			if (alreadyHasMessages) {

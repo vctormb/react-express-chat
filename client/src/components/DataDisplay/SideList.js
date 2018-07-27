@@ -109,9 +109,9 @@ class SideList extends Component {
 		
 		// console.log(value)
 
-		// socket.emit('join private room', {
-		// 	receiverId: value._id,
-		// });
+		socket.emit('join private room', {
+			receiverId: value._id,
+		});
 	}
 
 	render() {

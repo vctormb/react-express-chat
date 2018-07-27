@@ -1,13 +1,13 @@
-const OnlineUsers = require('../../models/OnlineUsers');
+const User = require('../../models/User');
 
 module.exports = (io, socket) => {
 	socket.on('join user', async (user) => {
 		// add user to db
-		const onlineUser = new OnlineUsers({ socketId: socket.id, nickname: user.nickname });
+		const onlineUser = new User({ socketId: socket.id, nickname: user.nickname });
 		await onlineUser.save();
 
 		// get online users
-		const onlineUsers = await OnlineUsers.find({})
+		const onlineUsers = await User.find({})
 			.where('_id').ne(onlineUser._id);
 
 		// send to current request socket client
