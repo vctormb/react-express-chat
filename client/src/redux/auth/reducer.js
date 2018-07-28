@@ -1,4 +1,5 @@
-import { LOGIN, NEW_ONLINE_USER, } from './types';
+import update from 'immutability-helper';
+import { LOGIN, NEW_ONLINE_USER, REMOVE_ONLINE_USER, } from './types';
 
 const INITIAL_STATE = {
 	user: {
@@ -37,7 +38,19 @@ const auth = (state = INITIAL_STATE, action) => {
 		case NEW_ONLINE_USER.SUCCESS:
 			return {
 				...state,
-				onlineUsers: state.onlineUsers.concat(action.newOnlineUser),
+				onlineUsers: update(state.onlineUsers, {
+					$push: [action.newOnlineUser]
+				}),
+			}
+
+		case REMOVE_ONLINE_USER.SUCCESS:
+			const userIndex = state.onlineUsers.findIndex(x => x._id === action.userId);
+
+			return {
+				...state,
+				onlineUsers: update(state.onlineUsers, {
+					$splice: [[userIndex, 1]]
+				}),
 			}
 
 		default:

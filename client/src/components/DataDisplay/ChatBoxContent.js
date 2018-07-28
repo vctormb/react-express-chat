@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter, } from 'react-router-dom';
-import { isEqual } from 'lodash';
 
 // context
 import { ChatContext, } from '../../containers/Chat/Context/ChatContext';
@@ -91,13 +90,13 @@ class ChatBoxContent extends Component {
 	checkIfUserHasMessages() {
 		const { chatContext, match: { params }, } = this.props;
 
-		return chatContext.state.usersMessages.some(x => x.emmiterId === params.id);
+		return chatContext.state.usersMessages.some(x => x.conversationId === params.id);
 	}
 
 	findUserMessagesObject(userMessages) {
 		const { match: { params }, } = this.props;
 
-		return userMessages.filter(x => x.emmiterId === params.id)[0];
+		return userMessages.filter(x => x.conversationId === params.id)[0];
 	}
 
 	handleKeyPress = event => {
@@ -127,7 +126,7 @@ class ChatBoxContent extends Component {
 						<ChatBoxMessage
 							key={index}
 							message={val.message}
-							nickname={state.userMessages.nickname}
+							nickname={val.nickname}
 						/>
 					))}
 				</Body>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { REMOVE_ONLINE_USER, } from '../../redux/auth/types';
 
 // socket
 import socket from '../../utils/socket';
@@ -104,13 +106,22 @@ const SideListButton = styled(Link)`
 class SideList extends Component {
 	state = {}
 
-	joinPrivateRoom = (value) => {
-		const { match: { params }, } = this.props;
-		
-		// console.log(value)
+	componentDidMount() {
+		this.getDisconnectedUser();
+	}
 
+	joinPrivateRoom = (value) => {
 		socket.emit('join private room', {
 			receiverId: value._id,
+		});
+	}
+
+	getDisconnectedUser() {
+		socket.on('disconnected user', ({ userId }) => {
+			this.props.dispatch({
+				type: REMOVE_ONLINE_USER.SUCCESS,
+				userId,
+			});
 		});
 	}
 
@@ -162,4 +173,4 @@ SideList.propTypes = {
 	onlineUsers: PropTypes.array.isRequired,
 }
 
-export default withRouter(SideList);
+export default connect()(withRouter(SideList));

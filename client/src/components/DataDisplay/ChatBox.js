@@ -61,7 +61,7 @@ class ChatBox extends Component {
 	}
 
 	renderContent() {
-		const { showChat, messages, } = this.state;
+		const { showChat, } = this.state;
 
 		if (showChat) {
 			return (

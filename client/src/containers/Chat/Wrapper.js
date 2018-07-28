@@ -51,39 +51,44 @@ class Wrapper extends Component {
 		socket.emit('send private message', { message, receiverId });
 	}
 
+	emitterOrReceiverAttr(isOwnMessage) {
+		if (isOwnMessage) return 'receiverId';
+
+		return 'emmiterId';
+	}
+
 	receiveMessage() {
 		socket.on('receive private message', (msg) => {
 			const { usersMessages } = this.state;
-console.log('== // ==')
-console.log(msg)
-			const alreadyHasMessages = usersMessages.some(x => x.emmiterId === msg.emmiterId);
+			const isOwnMessage = msg.emmiterSocketId === socket.id;
+
+			const alreadyHasMessages = usersMessages.some(x => x.conversationId === msg[this.emitterOrReceiverAttr(isOwnMessage)]);
 
 			if (alreadyHasMessages) {
-				this.populatePrivateMessages(msg)
+				this.populatePrivateMessages({ ...msg, isOwnMessage });
 			} else {
-				this.createNewPrivateMessage(msg);
+				this.createNewPrivateMessage({ ...msg, isOwnMessage });
 			}
 		});
 	}
 
-	createNewPrivateMessage({ message, ...rest }) {
+	async createNewPrivateMessage({ message, nickname, isOwnMessage, ...rest }) {
 		this.setState({
 			usersMessages: [{
+				conversationId: rest[this.emitterOrReceiverAttr(isOwnMessage)],
 				...rest,
-				messages: [{
-					message,
-				}]
+				messages: [{ nickname, message, }],
 			}],
 		});
 	}
 
-	populatePrivateMessages({ emmiterId, message, ...rest }) {
+	populatePrivateMessages({ isOwnMessage, nickname, message, ...rest }) {
 		const { usersMessages } = this.state;
 
-		const messageIndex = usersMessages.findIndex(x => x.emmiterId === emmiterId);
+		const messageIndex = usersMessages.findIndex(x => x.conversationId === rest[this.emitterOrReceiverAttr(isOwnMessage)]);
 		const newUsersMessages = update(usersMessages, {
 			[messageIndex]: {
-				messages: { $push: [{ message }] }
+				messages: { $push: [{ nickname, message, }] }
 			}
 		});
 
