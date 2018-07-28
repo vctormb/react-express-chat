@@ -18,6 +18,7 @@ import { Flex, Input, } from 'rebass';
 
 // components
 import Avatar from './Avatar';
+import MessageCounter from './MessageCounter';
 
 // intern components
 const BoxWrapper = styled(Flex)`
@@ -96,18 +97,23 @@ const SideListButton = styled(Link)`
 		}
 
 		& > span {
+			flex: 1;
 			overflow: hidden;
     	text-overflow: ellipsis;
     	white-space: nowrap;
 			opacity: .3;
 		}
-`
+`;
 
 class SideList extends Component {
 	state = {}
 
 	componentDidMount() {
 		this.getDisconnectedUser();
+	}
+
+	handleClickButton = (value) => {
+		this.joinPrivateRoom(value);
 	}
 
 	joinPrivateRoom = (value) => {
@@ -147,7 +153,7 @@ class SideList extends Component {
 						<SideListButton
 							key={index}
 							to={`/chat/${val._id}`}
-							onClick={() => this.joinPrivateRoom(val)}
+							onClick={() => this.handleClickButton(val)}
 						>
 							<React.Fragment>
 								<Avatar
@@ -156,6 +162,10 @@ class SideList extends Component {
 									m="0 .75rem 0 0"
 								/>
 								<span>{val.nickname}</span>
+
+								<MessageCounter
+									userId={val._id}
+								/>
 							</React.Fragment>
 						</SideListButton>
 					))}
@@ -173,4 +183,4 @@ SideList.propTypes = {
 	onlineUsers: PropTypes.array.isRequired,
 }
 
-export default connect()(withRouter(SideList));
+export default withRouter(connect()(SideList));

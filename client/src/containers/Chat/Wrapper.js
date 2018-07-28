@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, } from "react-router-dom";
+import { withRouter, } from "react-router-dom";
 import update from 'immutability-helper';
 
 // redux
@@ -18,6 +18,7 @@ import styled from 'styled-components';
 import { Flex, } from 'rebass';
 
 // components
+import PrivateRoute from '../../components/Routing/PrivateRoute';
 import SideList from '../../components/DataDisplay/SideList';
 import ChatBox from '../../components/DataDisplay/ChatBox';
 
@@ -112,7 +113,7 @@ class Wrapper extends Component {
 						nickname={user.data.nickname}
 						onlineUsers={onlineUsers}
 					/>
-					<Route
+					<PrivateRoute
 						path="/chat/:id?"
 						component={ChatBox}
 					/>
