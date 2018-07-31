@@ -75,11 +75,12 @@ class Wrapper extends Component {
 
 	async createNewPrivateMessage({ message, nickname, isOwnMessage, ...rest }) {
 		this.setState({
-			usersMessages: [{
+			usersMessages: this.state.usersMessages.concat({
 				conversationId: rest[this.emitterOrReceiverAttr(isOwnMessage)],
 				...rest,
 				messages: [{ nickname, message, }],
-			}],
+				unreadMessages: 1,
+			}),
 		});
 	}
 
@@ -87,14 +88,39 @@ class Wrapper extends Component {
 		const { usersMessages } = this.state;
 
 		const messageIndex = usersMessages.findIndex(x => x.conversationId === rest[this.emitterOrReceiverAttr(isOwnMessage)]);
+		const foundMessage = usersMessages.filter(x => x.conversationId === rest[this.emitterOrReceiverAttr(isOwnMessage)])[0];
+
 		const newUsersMessages = update(usersMessages, {
 			[messageIndex]: {
-				messages: { $push: [{ nickname, message, }] }
+				messages: {
+					$push: [{
+						nickname, message,
+					}]
+				},
+				unreadMessages: { $set: foundMessage.unreadMessages + 1 },
 			}
 		});
 
 		this.setState({
 			usersMessages: newUsersMessages
+		});
+	}
+
+	resetUnreadMessages = (conversationId) => {
+		const { usersMessages } = this.state;
+
+		const messageIndex = usersMessages.findIndex(x => x.conversationId === conversationId);
+
+		if (messageIndex === -1) return;
+
+		const resetedCounter = update(usersMessages, {
+			[messageIndex]: {
+				unreadMessages: { $set: 0 },
+			}
+		});
+
+		this.setState({
+			usersMessages: resetedCounter
 		});
 	}
 
@@ -106,6 +132,7 @@ class Wrapper extends Component {
 				state: this.state,
 				actions: {
 					sendMessage: this.sendMessage,
+					resetUnreadMessages: this.resetUnreadMessages,
 				}
 			}}>
 				<FlexWrapper mx={0}>
