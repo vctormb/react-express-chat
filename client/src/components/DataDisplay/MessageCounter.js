@@ -30,24 +30,20 @@ class MessageCounter extends Component {
 		const { counter } = this.state;
 		const { userId, match, chatContext, } = this.props;
 
-		if (this.props.location !== prevProps.location) {
-			this.hideCounter(match);
-		}
-
 		if (userId !== match.params.id) {
 			if (this.findConversation(chatContext.state.usersMessages) &&
 				this.findConversation(chatContext.state.usersMessages).unreadMessages !== counter) {
-				this.startCounter();
+				this.showCounter();
 			}
 		}
 
-		// if (userId === match.params.id) { << need to finish
-		// 	if (this.findConversation() &&
-		// 		this.findConversation(chatContext.state.usersMessages).length !==
-		// 		this.findConversation(prevProps.chatContext.state.usersMessages).length) {
-		// 		this.startCounter();
-		// 	}
-		// }
+		if (userId === match.params.id) {
+			if (this.findConversation(chatContext.state.usersMessages) &&
+				this.findConversation(chatContext.state.usersMessages).unreadMessages !== 0
+			) {
+				this.hideCounter();
+			}
+		}
 	}
 
 	findConversation(usersMessages) {
@@ -68,16 +64,7 @@ class MessageCounter extends Component {
 		});
 	}
 
-	hideCounter({ params }) {
-		const { userId, chatContext, } = this.props;
-
-		if (userId === params.id) {
-			this.setState({ showCounter: false });
-			chatContext.actions.resetUnreadMessages(userId);
-		}
-	}
-
-	startCounter() {
+	showCounter() {
 		const { chatContext, } = this.props;
 		const foundMessage = this.findConversation(chatContext.state.usersMessages);
 
@@ -87,6 +74,13 @@ class MessageCounter extends Component {
 			showCounter: foundMessage.unreadMessages !== 0,
 			counter: foundMessage.unreadMessages
 		});
+	}
+
+	hideCounter() {
+		const { userId, chatContext, } = this.props;
+
+		this.setState({ showCounter: false });
+		chatContext.actions.resetUnreadMessages(userId);
 	}
 
 	render() {
