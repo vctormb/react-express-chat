@@ -7,7 +7,6 @@ import { ChatContext, } from '../../containers/Chat/Context/ChatContext';
 
 // styled components
 import styled from 'styled-components';
-import { CLIENT_RENEG_WINDOW } from 'tls';
 
 const Wrapper = styled.div`
 	background-color: #f04747;

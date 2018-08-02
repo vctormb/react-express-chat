@@ -30,8 +30,6 @@ const Message = styled.div`
 	color: hsla(0,0%,100%,.7);
 `;
 
-
-
 class ChatBoxMessage extends Component {
 	state = {}
 

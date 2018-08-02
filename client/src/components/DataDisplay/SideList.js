@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, } from 'react-router-dom';
 import { REMOVE_ONLINE_USER, } from '../../redux/auth/types';
 
 // socket
@@ -90,6 +90,7 @@ const SideListButton = styled(Link)`
 		padding: .3rem .5rem;
 		border-radius: 3px;
 		color: #fff;
+		background-color: ${p => p.variant.isSelected ? p.theme.colors.graylight : 'transparent'};		
 
 		&:hover {
 			background-color: ${props => props.theme.colors.graysoft};
@@ -132,7 +133,7 @@ class SideList extends Component {
 	}
 
 	render() {
-		const { onlineUsers, nickname, } = this.props;
+		const { onlineUsers, nickname, match: { params, } } = this.props;
 
 		return (
 			<BoxWrapper width={[2 / 12]}>
@@ -154,6 +155,9 @@ class SideList extends Component {
 							key={index}
 							to={`/chat/${val._id}`}
 							onClick={() => this.handleClickButton(val)}
+							variant={{
+								isSelected: val._id === params.id,
+							}}
 						>
 							<React.Fragment>
 								<Avatar
@@ -173,7 +177,7 @@ class SideList extends Component {
 				<Footer>
 					<span>{nickname}</span>
 				</Footer>
-			</BoxWrapper>
+			</BoxWrapper >
 		);
 	}
 }

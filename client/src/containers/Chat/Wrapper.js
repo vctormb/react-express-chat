@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter, } from "react-router-dom";
 import update from 'immutability-helper';
 
 // redux
@@ -141,6 +140,7 @@ class Wrapper extends Component {
 						onlineUsers={onlineUsers}
 					/>
 					<PrivateRoute
+						exact
 						path="/chat/:id?"
 						component={ChatBox}
 					/>

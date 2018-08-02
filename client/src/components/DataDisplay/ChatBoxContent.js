@@ -45,7 +45,6 @@ class ChatBoxContent extends Component {
 	state = INITIAL_STATE
 
 	componentDidMount() {
-		this.scrollToBottom();
 		this.getUserMessages();
 	}
 
@@ -57,13 +56,13 @@ class ChatBoxContent extends Component {
 		}
 
 		if (params.id === prevProps.match.params.id && this.checkIfUserHasMessages()) {
-			if (this.findUserMessagesObject(chatContext.state.usersMessages).messages.length !==
-				prevState.userMessages.messages.length) {
+			if (
+				this.findUserMessagesObject(chatContext.state.usersMessages).messages.length !==
+				prevState.userMessages.messages.length
+			) {
 				this.setState({
-					userMessages: {
-						...this.findUserMessagesObject(chatContext.state.usersMessages),
-					}
-				});
+					userMessages: { ...this.findUserMessagesObject(chatContext.state.usersMessages), }
+				}, () => this.scrollToBottom());
 			}
 		}
 	}
@@ -102,7 +101,7 @@ class ChatBoxContent extends Component {
 	handleKeyPress = event => {
 		const { chatContext: { actions }, match: { params } } = this.props;
 
-		if (event.key !== 'Enter') return;
+		if (event.key !== 'Enter' || !event.target.value) return;
 
 		actions.sendMessage({
 			message: event.target.value,

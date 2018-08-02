@@ -44,7 +44,7 @@ class App extends Component {
 				<React.Fragment>
 					<Route exact path="/" component={Login} />
 					<Route path="/login" component={Login} />
-					<PrivateRoute path="/chat/:id?" component={Wrapper} />
+					<PrivateRoute exact path="/chat/:id?" component={Wrapper} />
 				</React.Fragment>
 			</Router>
 		);

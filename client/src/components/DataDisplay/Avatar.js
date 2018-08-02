@@ -21,7 +21,6 @@ class Avatar extends Component {
 
 	render() {
 		const {
-			props,
 			props: { width, height, m, },
 		} = this;
 
