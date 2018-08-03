@@ -2,8 +2,8 @@
 
 import io from 'socket.io-client';
 
-// const socket = io('http://10.11.9.108:9000');
-const socket = io('localhost:5000');
+const BASE_URL = process.env.NODE_ENV === 'development' ? 'localhost:5000' : 'https://react-chat-express.herokuapp.com/'
+const socket = io(BASE_URL);
 
 socket.on('connect', (e) => {
     socket.on('disconnect', () => {
