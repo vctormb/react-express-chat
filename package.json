@@ -1,11 +1,11 @@
 {
-  "name": "dengue-cases-api",
+  "name": "react-chat-express",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
 		"dev": "nodemon ./bin/www",
-		"heroku-postbuild": "cd client && yarn && yarn run build"
+		"heroku-postbuild": "cd client && yarn install && yarn build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
