@@ -106,6 +106,14 @@ const SideListButton = styled(Link)`
 		}
 `;
 
+const SideListText = styled.div`
+		text-align: center;
+		margin: 0.0625rem .5rem;
+		padding: .3rem .5rem;
+		color: #fff;
+		opacity: .3;
+`;
+
 class SideList extends Component {
 	state = {}
 
@@ -150,6 +158,13 @@ class SideList extends Component {
 				<Body
 					flexDirection="column"
 				>
+
+					{!onlineUsers.length &&
+						<SideListText>
+							Nobody is online :(
+						</SideListText>
+					}
+
 					{onlineUsers.map((val, index) => (
 						<SideListButton
 							key={index}
@@ -177,7 +192,7 @@ class SideList extends Component {
 				<Footer>
 					<span>{nickname}</span>
 				</Footer>
-			</BoxWrapper >
+			</BoxWrapper>
 		);
 	}
 }

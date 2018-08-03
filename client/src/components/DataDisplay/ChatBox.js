@@ -77,7 +77,7 @@ class ChatBox extends Component {
 				<Text
 					textAlign='center'
 					fontWeight='bold'
-					children='Lets chat!'
+					children='Click a friend to chat in private!'
 				/>
 			</NoContentWrapper>
 		)
