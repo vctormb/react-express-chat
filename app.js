@@ -5,9 +5,6 @@ const logger = require('morgan');
 var mongoose = require('mongoose');
 const passport = require('passport');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
 mongoose.connect('mongodb://admin:a123456@ds243501.mlab.com:43501/react-chat-express');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -16,6 +13,9 @@ db.once('open', () => {
 });
 
 const app = express();
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
