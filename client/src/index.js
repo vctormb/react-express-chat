@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 // redux
 import { Provider as ReduxProvider } from 'react-redux';
 import { createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import rootReducers from './redux/rootReducers';
 
 // rebass
