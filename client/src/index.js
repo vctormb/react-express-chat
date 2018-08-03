@@ -37,4 +37,4 @@ ReactDOM.render(
 		</RebassProvider>
 	</ReduxProvider>
 	, document.getElementById('root'));
-registerServiceWorker();
+// registerServiceWorker();

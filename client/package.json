@@ -21,9 +21,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"heroku-postbuild": "cd client && yarn && yarn run build"
   },
   "devDependencies": {
     "redux-devtools-extension": "^2.13.5"
-  }
+	},
+	"proxy": "http://localhost:5000"
 }
