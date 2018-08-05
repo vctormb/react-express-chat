@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 // redux
 import { Provider as ReduxProvider } from 'react-redux';
@@ -30,6 +30,7 @@ ReactDOM.render(
 				},
 				shadows: {
 					bottom: '0 1px 0 rgba(0,0,0,.2), 0 2px 0 rgba(0,0,0,.06)',
+					right: '0 0 10px rgba(0,0,0,.2), 0 0 11px rgba(0,0,0,.06)',
 				},
 			}}
 		>

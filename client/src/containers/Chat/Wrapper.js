@@ -31,6 +31,9 @@ const FlexWrapper = styled(Flex)`
 class Wrapper extends Component {
 	state = {
 		usersMessages: [],
+		sideList: {
+			isOpen: false,
+		},
 	}
 
 	componentDidMount() {
@@ -123,6 +126,15 @@ class Wrapper extends Component {
 		});
 	}
 
+	showSideList = () => {
+		this.setState({
+			sideList: {
+				...this.state.sideList,
+				isOpen: !this.state.sideList.isOpen,
+			}
+		});
+	}
+
 	render() {
 		const { authReducer: { onlineUsers, user, } } = this.props;
 
@@ -132,6 +144,7 @@ class Wrapper extends Component {
 				actions: {
 					sendMessage: this.sendMessage,
 					resetUnreadMessages: this.resetUnreadMessages,
+					showSideList: this.showSideList,
 				}
 			}}>
 				<FlexWrapper mx={0}>
