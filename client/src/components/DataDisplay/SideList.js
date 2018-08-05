@@ -24,10 +24,10 @@ import Avatar from './Avatar';
 import MessageCounter from './MessageCounter';
 
 const mixinMobileSidebar = props => `
-	left: ${props.variant.showSideList ? 0 : '-265px'};
+	transform: ${props.variant.showSideList ? 'translate3d(0, 0, 0)' : 'translate3d(-100%, 0, 0)'};
 	position: fixed;
 	height: 100%;
-	box-shadow: ${props.theme.shadows.right};
+	box-shadow: ${props.variant.showSideList ? props.theme.shadows.right : 'none'};
 	overflow: hidden;	
 	transition: all ${props.variant.showSideList ? '270ms ease-in' : '130ms ease-out'};
 `;
