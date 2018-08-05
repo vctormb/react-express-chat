@@ -126,11 +126,12 @@ class Wrapper extends Component {
 		});
 	}
 
-	showSideList = () => {
+	showSideList = (isOpen) => {
+
 		this.setState({
 			sideList: {
 				...this.state.sideList,
-				isOpen: !this.state.sideList.isOpen,
+				isOpen,
 			}
 		});
 	}

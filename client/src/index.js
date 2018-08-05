@@ -30,7 +30,7 @@ ReactDOM.render(
 				},
 				shadows: {
 					bottom: '0 1px 0 rgba(0,0,0,.2), 0 2px 0 rgba(0,0,0,.06)',
-					right: '0 0 10px rgba(0,0,0,.2), 0 0 11px rgba(0,0,0,.06)',
+					right: '0 0 20px rgba(0,0,0,.5), 0 0 21px rgba(0,0,0,.06)',
 				},
 			}}
 		>

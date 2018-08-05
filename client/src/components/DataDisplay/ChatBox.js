@@ -121,7 +121,7 @@ class ChatBox extends Component {
 			>
 				<Header>
 					<SidebarButton
-						onClick={() => chatContext.actions.showSideList()}
+						onClick={() => chatContext.actions.showSideList(true)}
 					>
 						<IconSidebarButton
 							viewBox="0 0 25 25"

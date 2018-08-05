@@ -24,10 +24,12 @@ import Avatar from './Avatar';
 import MessageCounter from './MessageCounter';
 
 const mixinMobileSidebar = props => `
-	display: ${props.variant.showSideList ? 'flex' : 'none'};
+	left: ${props.variant.showSideList ? 0 : '-265px'};
 	position: fixed;
 	height: 100%;
 	box-shadow: ${props.theme.shadows.right};
+	overflow: hidden;	
+	transition: all ${props.variant.showSideList ? '270ms ease-in' : '130ms ease-out'};
 `;
 
 // intern components
@@ -42,12 +44,13 @@ const BoxWrapper = styled(Flex)`
 		@media (max-width: 26.24em) {
 			/* when sidelist is open on mobile devices */
 			${mixinMobileSidebar}
-			width: ${props => props.variant.showSideList ? '80%' : 0};
+			width: ${props => props.variant.showSideList ? '80%' : '15rem'};
 		}
 
 		@media (min-width: 26.25em) and (max-width: 48em) {
 			${mixinMobileSidebar}
-			width: ${props => props.variant.showSideList ? '15rem' : 0};
+			/* width: ${props => props.variant.showSideList ? '15rem' : 0}; */
+			width: 15rem;
 		}
 `;
 
@@ -63,7 +66,7 @@ const Header = styled.div`
 
 		@media (max-width: 48em) {
 			/* when sidelist is open on mobile devices */
-			box-shadow: ${props => props.variant.showSideList ? 'none' : props.theme.shadows.bottom};
+			box-shadow: none;
 		}
 `;
 
@@ -147,7 +150,7 @@ const ModalBackground = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #00000078;
+    background-color: #000000a3;
 `;
 
 class SideList extends Component {
@@ -159,7 +162,7 @@ class SideList extends Component {
 
 	handleClickButton = (value) => {
 		this.joinPrivateRoom(value);
-		this.closeSidebar();
+		this.showSidebar(false);
 	}
 
 	joinPrivateRoom = (value) => {
@@ -177,10 +180,10 @@ class SideList extends Component {
 		});
 	}
 
-	closeSidebar = () => {
+	showSidebar = (isOpen) => {
 		const { chatContext } = this.props;
 
-		chatContext.actions.showSideList();
+		chatContext.actions.showSideList(isOpen);
 	}
 
 	render() {
@@ -190,7 +193,7 @@ class SideList extends Component {
 			<React.Fragment>
 				{chatContext.state.sideList.isOpen &&
 					<ModalBackground
-						onClick={this.closeSidebar}
+						onClick={() => this.showSidebar(false)}
 					/>
 				}
 
