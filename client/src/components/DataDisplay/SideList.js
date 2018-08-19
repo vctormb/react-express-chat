@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { connect, } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter, } from 'react-router-dom';
 import { REMOVE_ONLINE_USER, } from '../../redux/auth/types';
 
-// context
-import { ChatContext, } from '../../containers/Chat/Context/ChatContext';
+import withChat from '../../containers/Chat/Context/withChat';
 
 // socket
 import socket from '../../utils/socket';
@@ -49,7 +49,6 @@ const BoxWrapper = styled(Flex)`
 
 		@media (min-width: 26.25em) and (max-width: 48em) {
 			${mixinMobileSidebar}
-			/* width: ${props => props.variant.showSideList ? '15rem' : 0}; */
 			width: 15rem;
 		}
 `;
@@ -260,17 +259,15 @@ class SideList extends Component {
 	}
 }
 
+const enhance = compose(
+	withRouter,
+	withChat,
+	connect()
+)
+
 SideList.propTypes = {
 	nickname: PropTypes.string.isRequired,
 	onlineUsers: PropTypes.array.isRequired,
 }
 
-const withContextConsumer = props => (
-	<ChatContext.Consumer>
-		{context =>
-			<SideList {...props} chatContext={context} />
-		}
-	</ChatContext.Consumer>
-);
-
-export default withRouter(connect()(withContextConsumer));
+export default enhance(SideList);

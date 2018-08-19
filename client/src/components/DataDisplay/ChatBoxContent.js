@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { compose, } from 'redux';
 import { withRouter, } from 'react-router-dom';
 
 // context
-import { ChatContext, } from '../../containers/Chat/Context/ChatContext';
+import withChat from '../../containers/Chat/Context/withChat';
 
 // styled components
 import styled from 'styled-components';
@@ -141,12 +142,9 @@ class ChatBoxContent extends Component {
 	}
 }
 
-const withContextConsumer = props => (
-	<ChatContext.Consumer>
-		{context =>
-			<ChatBoxContent {...props} chatContext={context} />
-		}
-	</ChatContext.Consumer>
-);
+const enhance = compose(
+	withRouter,
+	withChat,
+)
 
-export default withRouter(withContextConsumer);
+export default enhance(ChatBoxContent);

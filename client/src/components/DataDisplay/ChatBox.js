@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // context
-import { ChatContext, } from '../../containers/Chat/Context/ChatContext';
+import withChat from '../../containers/Chat/Context/withChat';
 
 // redux
 import { connect } from 'react-redux';
@@ -142,12 +142,4 @@ const mapStateToProps = state => ({
 	authReducer: state.auth,
 });
 
-const withContextConsumer = props => (
-	<ChatContext.Consumer>
-		{context =>
-			<ChatBox {...props} chatContext={context} />
-		}
-	</ChatContext.Consumer>
-);
-
-export default connect(mapStateToProps)(withContextConsumer);
+export default withChat(connect(mapStateToProps)(ChatBox));

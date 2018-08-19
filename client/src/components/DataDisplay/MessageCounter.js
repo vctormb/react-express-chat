@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 
 // context
-import { ChatContext, } from '../../containers/Chat/Context/ChatContext';
+import withChat from '../../containers/Chat/Context/withChat';
 
 // styled components
 import styled from 'styled-components';
@@ -99,12 +100,9 @@ MessageCounter.propTypes = {
 	userId: PropTypes.string.isRequired,
 }
 
-const withContextConsumer = props => (
-	<ChatContext.Consumer>
-		{context =>
-			<MessageCounter {...props} chatContext={context} />
-		}
-	</ChatContext.Consumer>
-);
+const enhance = compose(
+	withRouter,
+	withChat,
+)
 
-export default withRouter(withContextConsumer);
+export default enhance(MessageCounter);
