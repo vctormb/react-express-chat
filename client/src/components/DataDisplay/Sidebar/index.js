@@ -1,9 +1,9 @@
 import Sidebar from './Sidebar';
-import SidebarContainer from './SidebarContainer';
+import SidebarManager from './SidebarManager';
 import SidebarBackdrop from './SidebarBackdrop';
 import SidebarButton from './SidebarButton';
 
-Sidebar.Container = SidebarContainer;
+Sidebar.Manager = SidebarManager;
 Sidebar.Backdrop = SidebarBackdrop;
 Sidebar.Button = SidebarButton;
 

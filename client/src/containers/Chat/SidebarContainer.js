@@ -124,7 +124,7 @@ class SidebarContainer extends Component {
 
 		return (
 			<React.Fragment>
-				<Sidebar.Container show={chatContext.state.sideList.isOpen}>
+				<Sidebar.Manager show={chatContext.state.sideList.isOpen}>
 					{sidebar => (
 						<React.Fragment>
 							<Sidebar.Backdrop
@@ -187,7 +187,7 @@ class SidebarContainer extends Component {
 							</Sidebar>
 						</React.Fragment>
 					)}
-				</Sidebar.Container>
+				</Sidebar.Manager>
 			</React.Fragment>
 		);
 	}

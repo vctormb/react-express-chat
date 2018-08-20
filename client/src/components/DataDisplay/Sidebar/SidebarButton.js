@@ -32,24 +32,16 @@ const Button = styled(Link)`
 		}
 `;
 
-class SidebarButton extends React.Component {
-	state = {}
-
-	render() {
-		const { isSelected, children, ...rest, } = this.props;
-
-		return (
-			<Button
-				{...rest}
-				variant={{
-					isSelected: isSelected,
-				}}
-			>
-				{children}
-			</Button>
-		);
-	}
-}
+const SidebarButton = ({ isSelected, children, ...rest }) => (
+	<Button
+		{...rest}
+		variant={{
+			isSelected: isSelected,
+		}}
+	>
+		{children}
+	</Button>
+)
 
 SidebarButton.defaultProps = {
 	isSelected: false,

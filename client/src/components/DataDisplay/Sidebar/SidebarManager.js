@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class SidebarContainer extends React.Component {
+class SidebarManager extends React.Component {
 	state = {
 		show: false,
 	}
@@ -31,12 +31,12 @@ class SidebarContainer extends React.Component {
 	}
 }
 
-SidebarContainer.defaultProps = {
+SidebarManager.defaultProps = {
 	show: false,
 }
 
-SidebarContainer.propTypes = {
+SidebarManager.propTypes = {
 	show: PropTypes.bool,
 }
 
-export default SidebarContainer;
+export default SidebarManager;
