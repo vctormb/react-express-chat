@@ -15,7 +15,7 @@ import { Flex, } from 'rebass';
 
 // components
 import PrivateRoute from '../../components/Routing/PrivateRoute';
-import SideList from '../../components/DataDisplay/SideList';
+import SidebarContainer from './SidebarContainer';
 import ChatBox from '../../components/DataDisplay/ChatBox';
 
 const FlexWrapper = styled(Flex)`
@@ -31,7 +31,7 @@ class Wrapper extends Component {
 		return (
 			<ChatProvider>
 				<FlexWrapper mx={0}>
-					<SideList
+					<SidebarContainer
 						nickname={user.data.nickname}
 						onlineUsers={onlineUsers}
 					/>
