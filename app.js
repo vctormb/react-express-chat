@@ -3,9 +3,9 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const passport = require('passport');
+const keys = require('./config/keys');
 
-mongoose.connect('mongodb://admin:a123456@ds243501.mlab.com:43501/react-chat-express');
+mongoose.connect(keys.mongoUri);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -17,25 +17,12 @@ const app = express();
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use(function (req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
-
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(passport.initialize());
-
-/**
- * ROUTES
- */
-// app.use('/api/auth', indexRouter);
-// app.use('/api/users', usersRouter);
 
 /**
  * SOCKET
