@@ -26,7 +26,7 @@ const INITIAL_STATE = {
 class MessageCounter extends Component {
 	state = INITIAL_STATE;
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate() {
 		const { counter } = this.state;
 		const { userId, match, chatContext, } = this.props;
 

@@ -3,37 +3,11 @@ import { compose, } from 'redux';
 import { withRouter, } from 'react-router-dom';
 
 // context
-import withChat from '../../containers/Chat/Context/withChat';
-
-// styled components
-import styled from 'styled-components';
+import withChat from './Context/withChat';
 
 // components
-import ChatBoxMessage from '../DataDisplay/ChatBoxMessage';
-import ChatInput from '../DataEntry/ChatInput';
-
-// intern components
-const Body = styled.div`
-    flex: 1;
-    overflow-y: auto;
-    color: white;
-
-    ::-webkit-scrollbar {
-        width: 6px;
-    }
- 
-    ::-webkit-scrollbar-thumb {
-			background-color: ${props => props.theme.colors.grayxdark};
-    }
-`;
-
-const Footer = styled.div`
-		margin: 0 1.25em;
-    padding: 1.625rem 0;
-    color: white;
-    background-color: ${props => props.theme.colors.graylight};
-		box-shadow: 0 -1px 0 hsla(0,0%,100%,.06);
-`;
+import Chatbox from '../../components/DataDisplay/Chatbox';
+import ChatInput from '../../components/DataEntry/ChatInput';
 
 const INITIAL_STATE = {
 	inputValue: '',
@@ -119,24 +93,24 @@ class ChatBoxContent extends Component {
 
 		return (
 			<React.Fragment>
-				<Body
+				<Chatbox
 					innerRef={element => this.messagesEnd = element}
 				>
 					{state.userMessages.messages.map((val, index) => (
-						<ChatBoxMessage
+						<Chatbox.Message
 							key={index}
 							message={val.message}
 							nickname={val.nickname}
 						/>
 					))}
-				</Body>
-				<Footer>
+				</Chatbox>
+				<Chatbox.Footer>
 					<ChatInput
 						value={state.inputValue}
 						onChange={e => this.setState({ inputValue: e.target.value })}
 						onKeyPress={e => this.handleKeyPress(e)}
 					/>
-				</Footer>
+				</Chatbox.Footer>
 			</React.Fragment>
 		)
 	}

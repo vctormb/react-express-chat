@@ -5,7 +5,8 @@ const INITIAL_STATE = {
 	user: {
 		isLoading: false,
 		isLoggedIn: false,
-		data: {},
+		data: {
+		},
 	},
 	onlineUsers: [],
 }

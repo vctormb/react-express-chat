@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // context
-import withChat from '../../containers/Chat/Context/withChat';
+import withChat from './Context/withChat';
 
 // redux
 import { connect } from 'react-redux';
@@ -13,24 +13,14 @@ import styled from 'styled-components';
 import { Flex, Text, Button, } from 'rebass';
 
 // components
+import Chatbox from '../../components/DataDisplay/Chatbox';
 import ChatBoxContent from './ChatBoxContent';
-import Icon from './Icon';
+import Icon from '../../components/DataDisplay/Icon';
 
 // intern components
 const Wrapper = styled(Flex)`
-		flex: 1;
-		background-color: ${props => props.theme.colors.graylight};
-`;
-
-const Header = styled.div`
-		display: flex;
-		align-items: center;
-		height: 3rem;
-		font-size: 1.125rem;
-    padding: 0.8300rem 0.625rem;
-    color: white;
-    box-shadow: ${props => props.theme.shadows.bottom};
-		font-weight: ${props => props.theme.fontWeights.bold};
+	flex: 1;
+	background-color: ${props => props.theme.colors.graylight};
 `;
 
 const NoContentWrapper = styled(Flex)`
@@ -40,17 +30,17 @@ const NoContentWrapper = styled(Flex)`
 `;
 
 const SidebarButton = styled(Button)`
-		display: none;
-	  background: transparent;
-    cursor: pointer;
+	display: none;
+	background: transparent;
+  cursor: pointer;
 
-		&:focus {
-			box-shadow: none;
-		}
+	&:focus {
+		box-shadow: none;
+	}
 
-		@media (max-width: 48em) {
-			display: block;
-		}
+	@media (max-width: 48em) {
+		display: block;
+	}
 `;
 
 const IconSidebarButton = styled(Icon)`
@@ -59,7 +49,7 @@ const IconSidebarButton = styled(Icon)`
 `;
 
 
-class ChatBox extends Component {
+class ChatBoxContainer extends Component {
 	state = {
 		chatsTitle: '',
 		showChat: false,
@@ -119,7 +109,7 @@ class ChatBox extends Component {
 				width={[10 / 12]}
 				flexDirection="column"
 			>
-				<Header>
+				<Chatbox.Header>
 					<SidebarButton
 						onClick={() => chatContext.actions.showSideList(true)}
 					>
@@ -131,7 +121,7 @@ class ChatBox extends Component {
 						/>
 					</SidebarButton>
 					{showChat && chatsTitle}
-				</Header>
+				</Chatbox.Header>
 				{this.renderContent()}
 			</Wrapper>
 		);
@@ -142,4 +132,4 @@ const mapStateToProps = state => ({
 	authReducer: state.auth,
 });
 
-export default withChat(connect(mapStateToProps)(ChatBox));
+export default withChat(connect(mapStateToProps)(ChatBoxContainer));

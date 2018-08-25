@@ -16,7 +16,7 @@ import { Flex, } from 'rebass';
 // components
 import PrivateRoute from '../../components/Routing/PrivateRoute';
 import SidebarContainer from './SidebarContainer';
-import ChatBox from '../../components/DataDisplay/ChatBox';
+import ChatBoxContainer from './ChatBoxContainer';
 
 const FlexWrapper = styled(Flex)`
     flex: 1;
@@ -38,7 +38,7 @@ class Wrapper extends Component {
 					<PrivateRoute
 						exact
 						path="/chat/:id?"
-						component={ChatBox}
+						component={ChatBoxContainer}
 					/>
 				</FlexWrapper>
 			</ChatProvider>
