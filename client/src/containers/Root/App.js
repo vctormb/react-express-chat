@@ -5,11 +5,11 @@ import { BrowserRouter as Router, Route, } from "react-router-dom";
 import { injectGlobal } from 'styled-components';
 
 // components
-import PrivateRoute from './components/Routing/PrivateRoute';
+import PrivateRoute from '../../components/Routing/PrivateRoute';
 
 // containers
-import Wrapper from './containers/Chat/Wrapper';
-import Login from './containers/Login/Login';
+import Wrapper from '../../containers/Chat/Wrapper';
+import Login from '../../containers/Login/Login';
 
 injectGlobal`
 	html, body {
